@@ -7,7 +7,6 @@ namespace Player {
         [SerializeField]
         private Animator animator = null;
 
-        public float MoveSpeed = 10f;
         public float RotateSpeed = 10f;
 
         [Header("Input")]
@@ -22,6 +21,10 @@ namespace Player {
         [Header("Interaction")]
         [SerializeField]
         private float interactionRange = 5f;
+
+        public GameObject InteractablePrompt;
+
+        public bool InteractableInRange;
 
         private Vector2 movementInput = Vector2.zero;
 
@@ -47,6 +50,24 @@ namespace Player {
             animator.SetBool("bIsMoving", movementInput != Vector2.zero);
         }
 
+        private void CheckInteractable () {
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactionRange);
+            IInteractable interactable = hit.collider?.gameObject.GetComponentInParent<IInteractable>();
+            if (interactable != null) {
+                InteractableInRange = true;
+            }
+            else {
+                InteractableInRange = false;
+            }
+
+            if (InteractableInRange && !InteractablePrompt.activeSelf) {
+                InteractablePrompt.SetActive(true);
+            }
+            else if (!InteractableInRange && InteractablePrompt.activeSelf) {
+                InteractablePrompt.SetActive(false);
+            }
+        }
+
         private void OnInteract(InputAction.CallbackContext context) {
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactionRange);
             IInteractable interactable = hit.collider?.gameObject.GetComponentInParent<IInteractable>();
@@ -56,8 +77,9 @@ namespace Player {
         }
 
         private void Update() {
-            transform.Translate(new Vector3(0, 0, movementInput.y * MoveSpeed * Time.deltaTime));
+            transform.Translate(new Vector3(0, 0, movementInput.y * movementSpeed * Time.deltaTime));
             transform.Rotate(new Vector3(0, movementInput.x * RotateSpeed * Time.deltaTime, 0));
+            CheckInteractable();
         }
 
 
