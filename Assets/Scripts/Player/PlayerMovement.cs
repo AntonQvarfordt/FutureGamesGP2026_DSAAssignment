@@ -7,6 +7,9 @@ namespace Player {
         [SerializeField]
         private Animator animator = null;
 
+        public float MoveSpeed = 10f;
+        public float RotateSpeed = 10f;
+
         [Header("Input")]
         [SerializeField]
         private InputActionReference moveAction = null;
@@ -53,7 +56,8 @@ namespace Player {
         }
 
         private void Update() {
-            transform.position += (new Vector3(movementInput.x, 0f, movementInput.y)) * (movementSpeed * Time.deltaTime);
+            transform.Translate(new Vector3(0, 0, movementInput.y * MoveSpeed * Time.deltaTime));
+            transform.Rotate(new Vector3(0, movementInput.x * RotateSpeed * Time.deltaTime, 0));
         }
 
 
@@ -70,6 +74,16 @@ namespace Player {
 
             moveAction.action.Disable();
             interactAction.action.Disable();
+        }
+
+        public void DisableInput() {
+            moveAction.action.Disable();
+            interactAction.action.Disable();
+        }
+
+        public void EnableInput() {
+            moveAction.action.Enable();
+            interactAction.action.Enable();
         }
     }
 }
