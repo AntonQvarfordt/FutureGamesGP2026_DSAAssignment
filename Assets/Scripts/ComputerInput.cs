@@ -35,17 +35,17 @@ public class ComputerInput : MonoBehaviour {
     }
 
     public void Open () {
-        gameObject.SetActive(true);
-        Input.ActivateInputField();
+        //gameObject.SetActive(true);
+        //Input.ActivateInputField();
 
-        GameManager.Instance.DisablePlayerInput();
-        IsOpen = true;
+        //GameManager.Instance.DisablePlayerInput();
+        //IsOpen = true;
     }
 
     public void Close() {
-        gameObject.SetActive(false);
-        IsOpen = false;
-        GameManager.Instance.EnablePlayerInput();
+        //gameObject.SetActive(false);
+        //IsOpen = false;
+        //GameManager.Instance.EnablePlayerInput();
     }
 
     public void SubmitInput(InputAction.CallbackContext cb) {
