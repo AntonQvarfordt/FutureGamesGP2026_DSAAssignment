@@ -3,6 +3,7 @@
 namespace Environment.Tasks {
     [System.Serializable]
     public abstract class Task : ScriptableObject {
-       public abstract void Execute();
+        public abstract string[] Execute();
+        public abstract string Name { get; }
     }
 }

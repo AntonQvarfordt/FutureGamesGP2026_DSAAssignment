@@ -1,4 +1,5 @@
 using Environment;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ namespace Player {
         private InputActionReference moveAction = null;
         [SerializeField]
         private InputActionReference interactAction = null;
+
+        public CinemachineInputAxisController LookAxis;
 
         [Header("Movement")]
         [SerializeField]
@@ -100,11 +103,13 @@ namespace Player {
 
         public void DisableInput() {
             moveAction.action.Disable();
+            LookAxis.enabled = false;
             interactAction.action.Disable();
         }
 
         public void EnableInput() {
             moveAction.action.Enable();
+            LookAxis.enabled = true;
             interactAction.action.Enable();
         }
     }

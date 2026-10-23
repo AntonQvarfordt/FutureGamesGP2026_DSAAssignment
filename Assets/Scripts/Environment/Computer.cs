@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using System;
 
 [System.Serializable]
 public class Employee {
@@ -21,17 +23,28 @@ public class Employees {
 
 namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
+        public InputAction OffKey;
+        public static Computer Instance;
         public ComputerInput CPInput;
+        public Employees employees;
         [SerializeField]
-        private Task testTask = null; // Put your stack/queue here :)
-
         public GenericQueue<Task> tasks = new GenericQueue<Task>();
-
         public List<Task> TasksToRun = new List<Task>();
 
         public Task CurrentTask;
 
+        private void OnEnable() {
+            OffKey.Enable();
+        }
+        private void OnDisable() {
+            OffKey.Disable();
+        }
+
         private void Awake() {
+            Instance = this;
+
+            OffKey.performed += HitOffKey;
+
             foreach(var task in TasksToRun) {
                 tasks.Enqueue(task);
             }
@@ -43,16 +56,33 @@ namespace Environment {
             CurrentTask = tasks.Peek();
         }
 
+
+
         public void OnInteract() {
             if(tasks.QueueIsEmpty()) {
                 Debug.LogWarning("Queue is empty!");
                 return;
             }
-            CurrentTask = tasks.Peek();
 
-            CurrentTask.Execute();
+            PCOn();
 
-            tasks.Dequeue();
+
+
+            //CurrentTask = tasks.Dequeue();
+
+            //CurrentTask.Execute();
+        }
+
+        public void PCOff () {
+            CPInput.Close();
+        }
+
+        public void PCOn() {
+            CPInput.Open();
+        }
+
+        private void HitOffKey(InputAction.CallbackContext context) {
+            PCOff();
         }
     }
 }
