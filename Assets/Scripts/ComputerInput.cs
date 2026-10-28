@@ -4,6 +4,24 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Environment;
 using Environment.Tasks;
+using System;
+
+[System.Serializable]
+public class Employee {
+    //these variables are case sensitive and must match the strings "firstName" and "lastName" in the JSON.
+    public string name;
+    public int employeeId;
+    public bool hasEngineRoomClearance;
+    public string lastEntranceInEngineRoom;
+    public string lastExitFromEngineRoom;
+    public DateTime lastEntranceInEngineRoomDateTime;
+    public DateTime lastExitFromEngineRoomDateTime;
+}
+
+[System.Serializable]
+public class Employees {
+    public Employee[] employees;
+}
 
 public class ComputerInput : MonoBehaviour {
     public InputAction SubmitAction;

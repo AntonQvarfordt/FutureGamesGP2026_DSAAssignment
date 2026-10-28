@@ -7,19 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System;
 
-[System.Serializable]
-public class Employee {
-    //these variables are case sensitive and must match the strings "firstName" and "lastName" in the JSON.
-    public string name;
-    public int employeeId;
-    public bool hasEngineRoomClearence;
-    public string lastEntranceInEngineRoom;
-    public string lastExitFromEngineRoom;
-}
-[System.Serializable]
-public class Employees {
-    public Employee[] employees;
-}
+
 
 namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
