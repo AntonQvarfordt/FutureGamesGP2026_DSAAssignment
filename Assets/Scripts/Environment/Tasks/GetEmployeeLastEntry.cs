@@ -53,6 +53,8 @@ public class GetEmployeeLastEntry : Task {
             }
         }
 
+        //var test = Utils.SortByEarliestEntry(employees.employees);
+
         var returnStrings = new List<string>();
         returnStrings.Add(LastEntry.name + " was last to enter the Engine Room, at: ");
         returnStrings.Add(LastEntry.lastEntranceInEngineRoomDateTime.Hour.ToString() + ":" + LastEntry.lastEntranceInEngineRoomDateTime.Minute + ":" + LastEntry.lastEntranceInEngineRoomDateTime.Second);
